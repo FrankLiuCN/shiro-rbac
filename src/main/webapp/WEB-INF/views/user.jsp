@@ -58,17 +58,10 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-4 list-info">
-						显示第1到第20条记录，共205条记录
+						
 					</div>
 					<div class="col-sm-8">
 					 <ul class="pagination">
-					    <li class="disabled"><a href="#">上一页</a></li>
-					    <li class="active"><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li><a href="#">下一页</a></li>
 					  </ul>
 					</div>
 				</div>

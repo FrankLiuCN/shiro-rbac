@@ -3,14 +3,18 @@ package com.frank.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.frank.dao.UserDao;
+import com.frank.dto.PageModel;
 import com.frank.dto.UserModel;
 import com.frank.entity.User;
 import com.frank.enums.Status;
 import com.frank.service.UserService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,8 +28,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserModel> queryUsers() {
-		List<User> users =  userDao.queryUsers();
+	public PageModel<UserModel> queryUsers(int pageNum,int pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<User> users =  userDao.queryUsers();	
 		List<UserModel> models=new ArrayList<UserModel>();
 		for(User user: users)
 		{
@@ -38,7 +43,8 @@ public class UserServiceImpl implements UserService {
 			model.setLastLoginTime(user.getLastLoginTime());
 			models.add(model);
 		}
-		return models;
+		PageModel<UserModel> pageModel=new PageModel<UserModel>(models,new PageInfo(users));
+		return pageModel;
 	}
 
 	@Override

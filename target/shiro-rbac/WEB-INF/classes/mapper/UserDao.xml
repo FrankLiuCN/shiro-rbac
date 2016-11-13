@@ -25,15 +25,23 @@
 		from User
 		where login_name=#{loginName}
 	</select>
-	
+
 	<select id="queryUsers" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from User		
+		from User
 	</select>
-	
+
 	<update id="updateLastLoginTime">
-		update User set last_login_time=now() where login_name=#{loginName}
+		update User set last_login_time=now() where
+		login_name=#{loginName}
 	</update>
+
+	<insert id="addUser" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.frank.entity.User">
+		insert into User
+		(login_name,nick_name,password,create_time,status)
+		values
+		(#{loginName},#{nickName},#{password},now(),#{status})
+	</insert>
 
 </mapper>

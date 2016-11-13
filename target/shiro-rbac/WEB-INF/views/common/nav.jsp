@@ -8,17 +8,15 @@
 			<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="<%=basePath%>/user">用戶管理</a></li>
-					<li><a href="<%=basePath%>/role/list">角色管理</a></li>
+					<li><a href="<%=basePath%>/role">角色管理</a></li>
 					<li><a href="#">模块管理</a></li>
 				</ul>
 			</div>
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<shiro:user>  
-				<li><a href="#"> <i class="glyphicon glyphicon-user"></i> <shiro:principal
-									property="nickName" /></a></li>
-						<li><a href="<%=basePath%>/logout"><i class="glyphicon glyphicon-off"></i>
-								注销</a></li>
+						<li><a href="#"> <i class="glyphicon glyphicon-user"></i> <shiro:principal property="nickName" /></a></li>
+						<li><a href="<%=basePath%>/logout"><i class="glyphicon glyphicon-off"></i>注销</a></li>
 					</shiro:user>
 				</ul>
 			</div>

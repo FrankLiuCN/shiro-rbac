@@ -58,7 +58,6 @@
 		}, function(result) {
 			if (result.code == 0) {
 				window.location.href =basePath+ result.data;
-				ccNotice(result.data);
 			} else {
 				ccNotice(result.msg);
 			}

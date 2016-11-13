@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.frank.dto.DataResult;
+import com.frank.dto.PageModel;
 import com.frank.dto.UserModel;
 import com.frank.entity.User;
 import com.frank.service.UserService;
@@ -54,10 +55,10 @@ public class UserController {
 
 	@RequestMapping(value = "/user/list", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult<List<UserModel>> userList() {
-		List<UserModel> models = userService.queryUsers();
-		DataResult<List<UserModel>> result = new DataResult<List<UserModel>>();
-		if (models.size() > 0) {
+	public DataResult<PageModel<UserModel>> userList(int pageNum,int pageSize) {
+		PageModel<UserModel> models = userService.queryUsers(pageNum,pageSize);
+		DataResult<PageModel<UserModel>> result = new DataResult<PageModel<UserModel>>();
+		if (models.getModels().size() > 0) {
 			result.setCode(0);
 			result.setData(models);
 		} else {

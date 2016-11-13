@@ -19,11 +19,10 @@
 			<div class="container">
 				<div class="page-top">
 					<div class="tool">
-						<button class="btn btn-primary" data-toggle="modal"
-							data-target="#addUserModal">
+						<button class="btn btn-primary" onclick="addUser()">
 							<i class="glyphicon glyphicon-plus"></i> 添加
 						</button>
-						<button class="btn btn-primary">
+						<button class="btn btn-primary" onclick="editUser()">
 							<i class="glyphicon glyphicon-edit"></i> 编辑
 						</button>
 						<button class="btn btn-danger">
@@ -42,7 +41,7 @@
 					</div>
 				</div>
 				<div class="page-list box">
-					<table class="table table-striped table-bordered text-center">
+					<table class="table table-striped table-bordered table-hover text-center">
 						<thead>
 							<tr>
 								<th>用户名</th>
@@ -54,20 +53,28 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
 						</tbody>
 					</table>
 				</div>
+				<div class="row">
+					<div class="col-sm-4 list-info">
+						显示第1到第20条记录，共205条记录
+					</div>
+					<div class="col-sm-8">
+					 <ul class="pagination">
+					    <li class="disabled"><a href="#">上一页</a></li>
+					    <li class="active"><a href="#">1</a></li>
+					    <li><a href="#">2</a></li>
+					    <li><a href="#">3</a></li>
+					    <li><a href="#">4</a></li>
+					    <li><a href="#">5</a></li>
+					    <li><a href="#">下一页</a></li>
+					  </ul>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="modal fade" tabindex="-1" role="dialog" id="addUserModal">
+		<div class="modal fade" tabindex="-1" role="dialog" id="userModal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

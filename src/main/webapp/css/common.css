@@ -59,6 +59,10 @@
 	float: right;
 }
 
+.pagination li{
+	cursor: pointer;
+}
+
 
 
 

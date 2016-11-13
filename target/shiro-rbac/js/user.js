@@ -1,46 +1,73 @@
-var _templateRow;
-
-$(function(){
+$(function() {
 	$(".select2").select2();
-	$("#btnSave").click(function(){		
-		addUser()
+	$("#btnSave").click(function() {
+
+		saveNewUser()
 	});
-	
+
 	getUserList();
 });
 
 function addUser(){
-	
-	var userModel={
-			nickName:$("#txtNickName").val(),
-			loginName:$("#txtLoginName").val(),
-			password:$("#txtPassword").val(),
-			status:$("#sltStatus").val()
-	};
-	
-	$.post(basePath + "/user/add",{userModel:userModel},function(result){
-		
-		
-	});
+	$('#userModal').modal('show')
 }
 
-function getUserList(){	
-	$.post(basePath + "/user/list", {}, function(result) {
+function checkAddData(){
+	if ($('#txtNickName').val().trim()==='') {
+		return '用户名不能为空!';
+	}
+	if ($('#txtLoginName').val().trim()==='') {
+		return '登录名不能为空!';
+	}
+	if ($('#txtPassword').val().trim()==='') {
+		return '密码不能为空!';
+	}
+	return '';
+}
+
+function saveNewUser() {
+	var checkResult=checkAddData();
+	if (''!==checkResult) {
+		ccNotice(checkResult);
+		return;
+	}
+	var userModel = {
+		nickName : $("#txtNickName").val(),
+		loginName : $("#txtLoginName").val(),
+		password : $("#txtPassword").val(),
+		status : $("#sltStatus").val()
+	};
+
+	$.post(basePath + "/user/add", userModel, function(result) {
 		if (result.code == 0) {
-			var data=result.data;
-			_templateRow=$('.page-list table tbody tr').clone();
-			$('.page-list table tbody tr').remove();
-			$.each(data,function(i,item){
-				_templateRow.find('td').eq(0).text(item.nickName);
-				_templateRow.find('td').eq(1).text(item.loginName);
-				_templateRow.find('td').eq(2).text(item.statusName);
-				_templateRow.find('td').eq(3).text(jsonDateFormat(item.createTime));
-				_templateRow.find('td').eq(4).text(jsonDateFormat(item.lastLoginTime));
-				_templateRow.appendTo($('.page-list table tbody'));
-			});
-		} else {
+			$('#userModal').modal('toggle')
+			rbNotice(result.data);
+			getUserList();
+		}else {
 			ccNotice(result.msg);
 		}
 	});
 }
 
+function getUserList() {
+	loading('.page-list');
+	$('.page-list table tbody').html('');
+	$.post(basePath + "/user/list", {}, function(result) {
+		if (result.code == 0) {
+			var data = result.data;
+			$.each(data, function(i, item) {			
+				var row= $('<tr/>');
+				$('<td/>').text(item.nickName).appendTo(row);
+				$('<td/>').text(item.loginName).appendTo(row);
+				$('<td/>').text(item.statusName).appendTo(row);
+				$('<td/>').text(jsonDateFormat(item.createTime)).appendTo(row);
+				$('<td/>').text(jsonDateFormat(item.lastLoginTime)).appendTo(row);
+				$('<td/>').appendTo(row);
+				row.appendTo($('.page-list table tbody'));
+			});
+		} else {
+			ccNotice(result.msg);
+		}
+		hideLoading();
+	});
+}

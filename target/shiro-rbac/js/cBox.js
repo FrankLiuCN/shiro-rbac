@@ -10,3 +10,15 @@ function ccNotice(content){
 		    });
 }
 
+function rbNotice(content){
+    new jBox('Notice', {
+        content: content,
+        position: {
+            x: 'right',
+            y: 'bottom'
+        },
+        animation:'tada',
+        autoClose: 5000
+    });
+}
+
