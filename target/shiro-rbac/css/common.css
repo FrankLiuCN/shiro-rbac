@@ -1,0 +1,27 @@
+.page-top {
+	width: 100%;
+	margin: 20px 0;
+}
+
+.page-top:after {
+	display: table;
+	content: " ";
+	clear: both;
+}
+
+.page-top .tool {
+	float: left;
+}
+
+.page-top .search {
+	float: right;
+}
+
+.page-top .search .input-group{
+	width: 300px;
+}
+
+.page-list{
+	width: 100%;
+		
+}

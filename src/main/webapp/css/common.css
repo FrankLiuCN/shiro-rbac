@@ -1,0 +1,69 @@
+.page-top {
+	width: 100%;
+	margin: 20px 0;
+}
+
+.page-top:after {
+	display: table;
+	content: " ";
+	clear: both;
+}
+
+.page-top .tool {
+	float: left;
+}
+
+.page-top .search {
+	float: right;
+}
+
+.page-top .search .input-group{
+	width: 300px;
+}
+
+.page-list{
+	width: 100%;
+	min-height: 50px;
+}
+
+.load-overlay{
+	position:absolute;
+	background-color:#000;
+	opacity:0.7;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+
+.load-content{
+	position:absolute;
+	width: 130px;
+	height:28px;
+	font-size: 20px;
+	color: #fff;
+	top:50%;
+	left:50%;
+	margin-left: -65px;
+	margin-top: -14px;
+}
+
+.list-info{
+	height: 33.33px;
+	line-height: 33.33px;
+}
+
+.pagination{
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+
+
+
+
+
+
+
+
+
