@@ -3,6 +3,9 @@ package com.frank.dto;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.frank.entity.User;
+import com.frank.enums.Status;
+
 public class UserModel implements Serializable  {
 	
 	private static final long serialVersionUID = 5558917688393269186L;
@@ -22,6 +25,20 @@ public class UserModel implements Serializable  {
 	private Integer status;
 	
 	private String  statusName;	
+	
+	public UserModel(){
+	}
+	
+	public UserModel(User user){
+		userID=user.getUserID();
+		loginName=user.getLoginName();
+		nickName=user.getNickName();
+		password=user.getPassword();
+		createTime=user.getCreateTime();
+		lastLoginTime=user.getLastLoginTime();
+		status=user.getStatus();
+		statusName=Status.stateOf(user.getStatus()).getName();
+	}
 
 	public String getUserID() {
 		return userID;

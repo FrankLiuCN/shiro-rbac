@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.frank.dao.UserDao;
 import com.frank.dto.PageModel;
@@ -28,19 +29,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageModel<UserModel> queryUsers(int pageNum,int pageSize) {
+	public PageModel<UserModel> queryUsers(int pageNum,int pageSize,String fuzzy) {
 		PageHelper.startPage(pageNum, pageSize);
-		List<User> users =  userDao.queryUsers();	
+		List<User> users =  userDao.queryUsers(fuzzy);	
 		List<UserModel> models=new ArrayList<UserModel>();
 		for(User user: users)
 		{
-			UserModel model=new UserModel();
-			model.setNickName(user.getNickName());
-			model.setLoginName(user.getLoginName());
-			model.setStatus(user.getStatus());
-			model.setStatusName(Status.stateOf(user.getStatus()).getName());
-			model.setCreateTime(user.getCreateTime());
-			model.setLastLoginTime(user.getLastLoginTime());
+			UserModel model=new UserModel(user);
+			model.setPassword("");
 			models.add(model);
 		}
 		PageModel<UserModel> pageModel=new PageModel<UserModel>(models,new PageInfo(users));
@@ -60,6 +56,24 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(model.getPassword());
 		user.setStatus(model.getStatus());
 		return userDao.addUser(user);
+	}
+
+	@Override
+	public UserModel queryUserByUserID(int userID) {	
+		User user=userDao.queryUserByUserID(userID);		
+		UserModel model=new UserModel(user);
+		model.setPassword("");	
+		return model;
+	}
+
+	@Override
+	public int editUser(User user) {
+		return userDao.editUser(user);
+	}
+
+	@Override
+	public int deleteUser(String[] userIDs) {
+		return userDao.deleteUser(userIDs);
 	}
 
 }

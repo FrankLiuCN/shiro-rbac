@@ -41,3 +41,50 @@ function hideLoading(){
 	$('.load-content').remove();
 	$('.load-overlay').remove();
 }
+
+function loadPageInfo(pageInfo) {
+	$('.list-info').text('显示第' + pageInfo.startRow + '到第' + pageInfo.endRow + '条记录，共'
+					+ pageInfo.total + '条记录');
+	var pagination=$('.pagination');
+	pagination.html('');
+	var li;	
+	if (pageInfo.prePage===0) {
+		li = $('<li/>',{
+			'class':'disabled'
+		});
+	}else{
+		li= $('<li/>');
+		li.click(function(){
+			getUserList(pageInfo.prePage);
+		});
+	}
+	$('<a/>').text('上一页').appendTo(li);
+	li.appendTo(pagination);
+	$.each(pageInfo.navigatepageNums,function(i,num){
+		if (num===pageInfo.pageNum) {
+			li = $('<li/>',{
+				'class':'active'
+			});
+		}else{
+			li= $('<li/>');
+			li.click(function(){
+				getUserList(num);
+			});
+		}
+		$('<a/>').text(num).appendTo(li);
+		li.appendTo(pagination);
+	});
+	
+	if (pageInfo.pageNum===pageInfo.lastPage) {
+		li = $('<li/>',{
+			'class':'disabled'
+		});
+	}else{
+		li= $('<li/>');
+		li.click(function(){
+			getUserList(pageInfo.nextPage);
+		});
+	}
+	$('<a/>').text('下一页').appendTo(li);
+	li.appendTo(pagination);
+}

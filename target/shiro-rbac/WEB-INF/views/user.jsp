@@ -25,15 +25,15 @@
 						<button class="btn btn-primary" onclick="editUser()">
 							<i class="glyphicon glyphicon-edit"></i> 编辑
 						</button>
-						<button class="btn btn-danger">
+						<button class="btn btn-danger" data-confirm="确认要删除所选的用户吗?">
 							<i class="glyphicon glyphicon-trash"></i> 删除
 						</button>
 					</div>
 					<div class="search">
 						<div class="input-group">
-							<input class="form-control" type="text" placeholder="用户名/登录名">
+							<input class="form-control" type="text" id="txtFuzzy" placeholder="用户名/登录名">
 							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">
+								<button class="btn btn-primary" type="button" onclick="search();">
 									<i class="glyphicon glyphicon-search"></i> 查询
 								</button>
 							</span>
@@ -44,11 +44,12 @@
 					<table class="table table-striped table-bordered table-hover text-center">
 						<thead>
 							<tr>
+								<th style="width: 40px;"><input type="checkbox" class="all"/></th>
 								<th>用户名</th>
 								<th>登录名</th>
-								<th>状态</th>
-								<th>创建时间</th>
-								<th>最后登录时间</th>
+								<th style="width: 60px;">状态</th>
+								<th style="width: 180px;">创建时间</th>
+								<th style="width: 180px;">最后登录时间</th>
 								<th>角色</th>
 							</tr>
 						</thead>
@@ -58,17 +59,10 @@
 				</div>
 				<div class="row">
 					<div class="col-sm-4 list-info">
-						显示第1到第20条记录，共205条记录
+						
 					</div>
 					<div class="col-sm-8">
 					 <ul class="pagination">
-					    <li class="disabled"><a href="#">上一页</a></li>
-					    <li class="active"><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li><a href="#">下一页</a></li>
 					  </ul>
 					</div>
 				</div>

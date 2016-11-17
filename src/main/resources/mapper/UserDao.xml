@@ -10,7 +10,8 @@
 		<result column="nick_name" property="nickName" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-		<result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+		<result column="last_login_time" property="lastLoginTime"
+			jdbcType="TIMESTAMP" />
 		<result column="status" property="status" jdbcType="BIGINT" />
 	</resultMap>
 
@@ -29,7 +30,11 @@
 	<select id="queryUsers" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from User
+		from User where 1=1 
+		<if test="fuzzy!=null">
+		and (login_name like CONCAT('%',#{fuzzy},'%') or nick_name like CONCAT('%',#{fuzzy},'%'))
+		</if>
+		order by create_time desc
 	</select>
 
 	<update id="updateLastLoginTime">
@@ -37,11 +42,37 @@
 		login_name=#{loginName}
 	</update>
 
-	<insert id="addUser" useGeneratedKeys="true" keyProperty="user_id" parameterType="com.frank.entity.User">
+	<insert id="addUser" useGeneratedKeys="true" keyProperty="user_id"
+		parameterType="com.frank.entity.User">
 		insert into User
 		(login_name,nick_name,password,create_time,status)
 		values
 		(#{loginName},#{nickName},#{password},now(),#{status})
 	</insert>
+	
+	<update id="editUser" parameterType="com.frank.entity.User">
+		update User set 
+		login_name=#{loginName}
+		,nick_name=#{nickName}
+		,status=#{status}
+		<if test="password!=null and password!=''">
+		,password=#{password}
+		</if>
+		where user_id=#{userID}
+	</update>
+	
+	<select id="queryUserByUserID" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from User
+		where user_id=#{userID}
+	</select>
+	
+	<delete id="deleteUser">
+		delete from user where user_id in
+		<foreach collection="array" item="userID" index="index" open="(" separator="," close=")">
+			#{userID}
+		</foreach>
+	</delete>
 
 </mapper>

@@ -6,7 +6,7 @@ function ccNotice(content){
 		            y: 'center'
 		        },
 		        animation:'tada',
-		        autoClose: 2000
+		        autoClose: 3000
 		    });
 }
 
@@ -19,6 +19,20 @@ function rbNotice(content){
         },
         animation:'tada',
         autoClose: 5000
+    });
+}
+
+function cConfirm(confirmCallback){	
+	new jBox('Confirm', {
+    	confirmButton: '确认',
+    	cancelButton: '取消',
+        animation:'zoomOut',
+        confirm:function(){
+        	if (confirmCallback) {
+        		confirmCallback();
+			}
+        }
+    
     });
 }
 
