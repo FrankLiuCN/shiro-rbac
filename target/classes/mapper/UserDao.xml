@@ -42,7 +42,7 @@
 		login_name=#{loginName}
 	</update>
 
-	<insert id="addUser" useGeneratedKeys="true" keyProperty="user_id"
+	<insert id="addUser" useGeneratedKeys="true" keyProperty="userID"
 		parameterType="com.frank.entity.User">
 		insert into User
 		(login_name,nick_name,password,create_time,status)

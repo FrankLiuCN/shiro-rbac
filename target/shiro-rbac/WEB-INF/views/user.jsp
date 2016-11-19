@@ -47,10 +47,10 @@
 								<th style="width: 40px;"><input type="checkbox" class="all"/></th>
 								<th>用户名</th>
 								<th>登录名</th>
-								<th style="width: 60px;">状态</th>
-								<th style="width: 180px;">创建时间</th>
-								<th style="width: 180px;">最后登录时间</th>
-								<th>角色</th>
+								<th style="width: 100px;">状态</th>
+								<th style="width: 200px;">创建时间</th>
+								<th style="width: 200px;">最后登录时间</th>
+								<th style="width: 250px;">角色</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -109,9 +109,8 @@
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-2 control-label">角色</label>
 								<div class="col-sm-10">
-				                <select class="form-control select2" multiple="multiple" data-placeholder="选择一个角色" style="width: 100%;">
-				                  <option>Alabama</option>
-				                  <option>Alaska</option>
+				                <select class="form-control select2" id="sltRole" multiple="multiple" data-placeholder="选择一个角色" style="width: 100%;">
+
 				                </select>
 				                </div>
 							</div>

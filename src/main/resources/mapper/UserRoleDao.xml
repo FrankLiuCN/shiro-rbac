@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.dao.UserRoleDao">
+	<resultMap type="com.frank.entity.UserRole" id="BaseResultMap">
+		<result column="user_id" property="userID" jdbcType="INTEGER"/>
+		<result column="role_id" property="roleID" jdbcType="INTEGER"/>
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="queryUserRole" resultMap="BaseResultMap">
+		select ur.user_id,r.role_id,r.role_name
+		from user_role ur
+		left join role r on r.role_id = ur.role_id
+	</select>
+	
+	<insert id="addUserRole">
+		insert into user_role(user_id,role_id) values(#{userID},#{roleID})
+	</insert>
+	
+	<delete id="deleteUserRoleByUserID">
+		delete from user_role where user_id in
+		<foreach collection="array" item="userID" index="index" open="(" separator="," close=")">
+			#{userID}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

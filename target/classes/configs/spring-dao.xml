@@ -36,15 +36,18 @@
 		<property name="acquireRetryAttempts" value="2" />
 	</bean>
 	
+	<!-- 配置事务管理器 SqlSessionFactoryBean引用的数据源与DataSourceTransactionManager引用的数据源一致 -->
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 注入数据连接池 -->
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	<!-- 配置基于注解的声明式事务 默认使用注解来管理事务行为 -->
 	<tx:annotation-driven transaction-manager="txManager"/>
 
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-
+		<property name="configLocation" value="classpath:configs/mybatis-config.xml"></property>
 		<property name="mapperLocations" value="classpath:mapper/*.xml" />
 		<property name="typeAliasesPackage" value="com.frank.entity" />
 		<property name="plugins">

@@ -15,11 +15,11 @@ public interface UserService {
 	
 	void updateLastLoginTime(String loginName);
 	
-	int addUser(UserModel model);
+	void addUser(UserModel model);
 	
 	UserModel queryUserByUserID(@Param("userID")int userID);
 	
-	int editUser(User user);
+	void editUser(UserModel userModel);
 	
-	int deleteUser(String[] userIDs);
+	int deleteUser(Integer[] userIDs);
 }

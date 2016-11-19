@@ -17,10 +17,34 @@
 		</if>
 	</select>
 	
+	<select id="queryAllRoles" resultMap="BaseResultMap">
+		select role_id,role_name
+		from role
+	</select>
+		
+	<select id="queryRoleByUserID" resultMap="BaseResultMap">
+		select r.role_id,r.role_name
+		from user_role ur
+		left join role r on r.role_id = ur.role_id
+		where user_id=#{userID}
+	</select>
+	
 	<insert id="addRole" useGeneratedKeys="true" keyProperty="role_id">
 		insert into role
 		(role_name)
 		values
 		(#{roleName})
 	</insert>
+	
+	<update id="editRole" parameterType="com.frank.entity.Role">
+		update role set role_name=#{roleName} where role_id=#{roleID}
+	</update>
+	
+	<delete id="deleteRole">
+		delete from role where role_id in 
+		<foreach collection="array" item="roleID" index="index" open="(" separator="," close=")">
+			#{roleID}
+		</foreach>
+	</delete>
+	
 </mapper>

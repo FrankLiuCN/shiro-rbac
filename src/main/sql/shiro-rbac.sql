@@ -31,22 +31,25 @@ CREATE TABLE `user_role`(
 
 CREATE TABLE `menu`(
 `menu_id`  int NOT NULL AUTO_INCREMENT COMMENT '菜单编号',
-`parent_id` varchar(50) NOT NULL COMMENT '菜单父级编号',
-`name` varchar(100) NOT NULL COMMENT '名称',
+`menu_name` varchar(100) NOT NULL COMMENT '名称',
 `sort` int COMMENT '排序',
 `href` varchar(2000) COMMENT '链接',
-`icon` varchar(100) COMMENT '图标',
-`enable` char(1) NOT NULL COMMENT '是否启用',
-`permission` varchar(100) COMMENT '权限标识',
+`status` bigint(1) NOT NULL COMMENT '是否启用',
 `remark`  varchar(255) COMMENT '备注信息',
-`create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 PRIMARY KEY(`menu_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT='菜单表';
 
-CREATE TABLE `role_menu`(
+CREATE TABLE `function`(
+`function_id` int NOT NULL AUTO_INCREMENT COMMENT '方法编号',
+`function_name` varchar(100) NOT NULL COMMENT '',
+`permission` varchar(100) COMMENT '权限标识',
+PRIMARY KEY(`function_id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT='方法表';
+
+CREATE TABLE `role_function`(
 `user_id` int NOT NULL COMMENT '用户编号',
-`menu_id` int NOT NULL COMMENT '菜单编号'
-)ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT='角色菜单表';
+`function_id` int NOT NULL COMMENT '方法编号'
+)ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT='角色方法表';
 
 
 

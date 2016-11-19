@@ -2,7 +2,10 @@ package com.frank.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
+import com.frank.entity.Role;
 import com.frank.entity.User;
 import com.frank.enums.Status;
 
@@ -10,7 +13,7 @@ public class UserModel implements Serializable  {
 	
 	private static final long serialVersionUID = 5558917688393269186L;
 
-	private String userID;
+	private Integer userID;
 	
 	private String loginName;
 	
@@ -26,10 +29,12 @@ public class UserModel implements Serializable  {
 	
 	private String  statusName;	
 	
+	private List<Role> roles;
+	
 	public UserModel(){
 	}
 	
-	public UserModel(User user){
+	public UserModel(User user,List<Role> roles){
 		userID=user.getUserID();
 		loginName=user.getLoginName();
 		nickName=user.getNickName();
@@ -38,13 +43,14 @@ public class UserModel implements Serializable  {
 		lastLoginTime=user.getLastLoginTime();
 		status=user.getStatus();
 		statusName=Status.stateOf(user.getStatus()).getName();
+		this.roles=roles;
 	}
 
-	public String getUserID() {
+	public Integer getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+	public void setUserID(Integer userID) {
 		this.userID = userID;
 	}
 
@@ -102,6 +108,14 @@ public class UserModel implements Serializable  {
 
 	public void setStatusName(String statusName) {
 		this.statusName = statusName;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

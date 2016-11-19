@@ -1,6 +1,7 @@
 var _fuzzy;
-var _userID;// 当前选择要编辑的用户ID
+var _role;// 当前选择要编辑的用户ID
 $(function() {
+	$('.main-header .role').addClass('active');
 	initHeadCheck();
 
 	$("#btnSave").click(function() {
@@ -15,8 +16,30 @@ $(function() {
 	// 加载 用户列表
 	getRoleList();
 
-	// cConfirm(deleteUser);
+	cConfirm(deleteRole);
 });
+
+function deleteRole(){
+	var checkboxes = $('input.check');
+	var roleIDs=new Array();
+	$.each(checkboxes, function(index, item) {
+		if (true == $(item).is(':checked')) {
+			roleIDs.push($(item).attr('roleid'));
+		}
+	});
+	if (roleIDs.length<1) {
+		ccNotice('请选择要删除的记录！');
+		return;
+	}
+	$.post(basePath + '/role/delete',{roleIDs:roleIDs}, function(result) {
+		if (result.code == 0) {
+			rbNotice(result.msg);
+			getRoleList();
+		} else {
+			ccNotice(result.msg);
+		}
+	});	
+}
 
 function getRoleList(pageNum) {
 	if (!pageNum) {
@@ -51,35 +74,68 @@ function getRoleList(pageNum) {
 
 }
 
-function addRole(){
+function addRole() {
+	$('#txtRoleName').val('');
 	$('#roleModal .modal-title').text("添加角色");
 	$('#roleModal').modal('show')
 }
 
-function editRole(){
+function editRole() {
+
+	var checkboxes = $('input.check');
+	_role = undefined;
+	$.each(checkboxes, function(index, item) {
+		if (true == $(item).is(':checked')) {
+			_role = {
+				roleID : $(item).attr('roleid'),
+				roleName : $(item).parent().parent().next().next().text()
+			};
+			return false;
+		}
+	});
+	if (!_role) {
+		ccNotice('请选择一条记录！');
+		return;
+	}
+
 	$('#roleModal .modal-title').text("编辑角色");
 	$('#roleModal').modal('show')
+	$('#txtRoleName').val(_role.roleName);
 }
 
 function saveNewRole() {
-	var roleName=$('#txtRoleName').val().trim();
-	if (roleName==="") {
+	var roleName = $('#txtRoleName').val().trim();
+	if (roleName === "") {
 		ccNotice('角色名称不能为空!');
 		return;
 	}
 	$.post(basePath + "/role/add", {
-		roleName:roleName
-	},function(result){
-		if (result.code===0) {
+		roleName : roleName
+	}, function(result) {
+		if (result.code === 0) {
+			$('#roleModal').modal('toggle');
 			getRoleList();
-		}else{
+		} else {
 			ccNotice(result.msg);
 		}
 	});
 }
 
 function saveEditRole() {
-
+	var roleName = $('#txtRoleName').val().trim();
+	if (roleName === "") {
+		ccNotice('角色名称不能为空!');
+		return;
+	}
+	_role.roleName = roleName;
+	$.post(basePath + "/role/edit", _role, function(result) {
+		if (result.code === 0) {
+			$('#roleModal').modal('toggle');
+			getRoleList();
+		} else {
+			ccNotice(result.msg);
+		}
+	});
 }
 
 function initHeadCheck() {

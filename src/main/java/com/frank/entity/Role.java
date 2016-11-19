@@ -2,15 +2,15 @@ package com.frank.entity;
 
 public class Role {
 	
-	private String roleID;
+	private Integer roleID;
 	
 	private String roleName;
 
-	public String getRoleID() {
+	public Integer getRoleID() {
 		return roleID;
 	}
 
-	public void setRoleID(String roleID) {
+	public void setRoleID(Integer roleID) {
 		this.roleID = roleID;
 	}
 

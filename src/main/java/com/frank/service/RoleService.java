@@ -10,4 +10,12 @@ public interface RoleService {
 	PageModel<Role> queryRoles(int pageNum,int pageSize,String roleName);
 	
 	int addRole(String roleName);
+	
+	int editRole(Role role);
+	
+	int deleteRole(int[] roleIDs);
+	
+	List<Role> queryAllRoles();
+	
+	List<Role> queryRoleByUserID(int userID);
 }

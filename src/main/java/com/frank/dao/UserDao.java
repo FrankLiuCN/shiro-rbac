@@ -19,5 +19,5 @@ public interface UserDao {
 	
 	int editUser(User user);
 	
-	int deleteUser(String[] userIDs);
+	int deleteUser(Integer[] userIDs);
 }

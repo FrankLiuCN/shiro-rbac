@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.dao.MenuDao">
+	<resultMap type="com.frank.entity.Menu" id="BaseResultMap">
+		<id column="menu_id" property="menuID" jdbcType="INTEGER"/>
+		<result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+		<result column="sort" property="sort" jdbcType="INTEGER"/>
+		<result column="href" property="href" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="remark" property="remark" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		menu_id, menu_name, sort, href, status,remark
+	</sql>
+	
+	<insert id="addMenu" useGeneratedKeys="true" keyProperty="menuID" parameterType="com.frank.entity.Menu">
+		insert into menu
+		(menu_name,sort,href,status,remark)
+		values
+		(#{menuName},#{sort},#{href},#{status},#{remark})
+	</insert>
+	
+	<update id="editMenu" parameterType="com.frank.entity.Menu">
+		update menu 
+		set menu_name=#{menuName},sort=#{sort},href=#{href},status=#{status},remark=#{remark}
+		where menu_id=#{menuID}
+	</update>
+	
+	<select id="queryMenuByMenuID" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from menu where menu_id=#{menuID}
+	</select>
+	
+	<select id="queryMenus" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from menu where 1=1 
+		<if test="fuzzy!=null">
+		and menu_name like CONCAT('%',#{fuzzy},'%')
+		</if>
+	</select>
+	
+	<delete id="deleteMenu">
+		delete from menu where menu_id in 
+		<foreach collection="array" item="menuID" index="index" open="(" separator="," close=")">
+			#{menuID}
+		</foreach>
+	</delete>
+	
+	
+</mapper>

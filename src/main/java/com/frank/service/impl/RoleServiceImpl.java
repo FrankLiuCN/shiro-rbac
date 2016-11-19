@@ -32,4 +32,24 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.addRole(roleName);
 	}
 
+	@Override
+	public int editRole(Role role) {
+		return roleDao.editRole(role);
+	}
+
+	@Override
+	public int deleteRole(int[] roleIDs) {
+		return roleDao.deleteRole(roleIDs);
+	}
+
+	@Override
+	public List<Role> queryAllRoles() {		
+		return roleDao.queryAllRoles();
+	}
+
+	@Override
+	public List<Role> queryRoleByUserID(int userID) {
+		return roleDao.queryRoleByUserID(userID);
+	}
+
 }

@@ -2,8 +2,6 @@ package com.frank.controller;
 
 import java.util.List;
 
-import javax.jws.soap.InitParam;
-
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.frank.dao.UserDao;
-import com.frank.dto.CList;
 import com.frank.dto.DataResult;
 import com.frank.dto.PageModel;
 import com.frank.dto.UserModel;
 import com.frank.entity.User;
+import com.frank.exception.AddUserExcetion;
 import com.frank.service.UserService;
 import com.frank.shiro.SubjectManager;
 
@@ -74,25 +72,30 @@ public class UserController {
 
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult<String> addUser(UserModel userModel) {
-		Integer re=userService.addUser(userModel);
-		DataResult<String> result=new DataResult<String>(0,"执行成功",re.toString());
+	public DataResult<String> addUser(@RequestBody UserModel userModel) {
+		DataResult<String> result;
+		try {
+			userService.addUser(userModel);
+			result=new DataResult<String>(0,"执行成功");
+		} catch (AddUserExcetion aue) {
+			result=new DataResult<String>(-1,aue.getMessage());
+		}
 		return result;
 	}
 	
 	@RequestMapping(value = "/user/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult<String> editUser(User user) {
-		Integer re=userService.editUser(user);
-		DataResult<String> result=new DataResult<String>(0,"执行成功",re.toString());
+	public DataResult<String> editUser(@RequestBody UserModel userModel) {
+		userService.editUser(userModel);
+		DataResult<String> result=new DataResult<String>(0,"执行成功","");
 		return result;
 	}
 	
 	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult<String> deleteUser(@RequestParam(value = "userIDs[]") String[] userIDs) {
+	public DataResult<String> deleteUser(@RequestParam(value = "userIDs[]") Integer[] userIDs) {
 		Integer re=userService.deleteUser(userIDs);
-		DataResult<String> result=new DataResult<String>(0,"执行成功","re.toString()");
+		DataResult<String> result=new DataResult<String>(0,"执行成功");
 		return result;
 	}
 	
