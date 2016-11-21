@@ -3,9 +3,9 @@ package com.frank.controller;
 import java.util.List;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +50,13 @@ public class UserController {
 		return "redirect:login";
 	}
 
+	@RequiresPermissions("user:view")
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String userManage() {
 		return "user";
 	}
 
+	@RequiresPermissions("user:view")
 	@RequestMapping(value = "/user/list", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<PageModel<UserModel>> userList(int pageNum,int pageSize,String fuzzy) {
@@ -70,6 +72,7 @@ public class UserController {
 		return result;
 	}
 
+	@RequiresPermissions("user:add")
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> addUser(@RequestBody UserModel userModel) {
@@ -83,6 +86,7 @@ public class UserController {
 		return result;
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value = "/user/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> editUser(@RequestBody UserModel userModel) {
@@ -91,6 +95,7 @@ public class UserController {
 		return result;
 	}
 	
+	@RequiresPermissions("user:delete")
 	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> deleteUser(@RequestParam(value = "userIDs[]") Integer[] userIDs) {
@@ -99,6 +104,7 @@ public class UserController {
 		return result;
 	}
 	
+	@RequiresPermissions("user:edit")
 	@RequestMapping(value = "/user/{userID}/detail", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<UserModel> userDetail(@PathVariable("userID")int userID){

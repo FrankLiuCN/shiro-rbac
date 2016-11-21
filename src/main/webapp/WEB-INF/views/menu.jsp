@@ -25,6 +25,9 @@
 						<button class="btn btn-primary" onclick="editMenu()">
 							<i class="glyphicon glyphicon-edit"></i> 编辑
 						</button>
+						<button class="btn btn-primary" onclick="setFunction()">
+							<i class="glyphicon glyphicon-edit"></i> 设置方法
+						</button>
 						<button class="btn btn-danger" data-confirm="确认要删除所选的菜单吗?">
 							<i class="glyphicon glyphicon-trash"></i> 删除
 						</button>
@@ -124,7 +127,7 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
-		
+
 		<div class="modal fade" tabindex="-1" role="dialog" id="functionModal">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -136,41 +139,38 @@
 						<h4 class="modal-title"></h4>
 					</div>
 					<div class="modal-body">
-						<form class="form-horizontal" role="form">
+						<div class="form-horizontal">
 							<div class="form-group">
-								<label for="txtMenuName" class="col-sm-2 control-label">菜单名称</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtMenuName"
-										placeholder="菜单名称">
+								<label for="txtFunctionName" class="col-sm-2 control-label">方法名称</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="txtFunctionName"
+										placeholder="方法名称">
 								</div>
-								<label for="txtLoginName" class="col-sm-2 control-label">排序</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtSort"
-										placeholder="排序">
+								<label for="" txtPemission"" class="col-sm-2 control-label">权限标识</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="txtPemission"
+										placeholder="权限标识">
+								</div>
+								<div class="col-sm-2">
+									<button class="btn btn-primary" onclick="saveFunction()">添加
+									</button>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="sltStatus" class="col-sm-2 control-label">状态</label>
-								<div class="col-sm-4">
-									<select class="form-control" id="sltStatus">
-										<option value="1">启用</option>
-										<option value="0">禁用</option>
-									</select>
-								</div>
-								<label for="txtPassword" class="col-sm-2 control-label">备注</label>
-								<div class="col-sm-4">
-									<input type="text" class="form-control" id="txtRemark"
-										placeholder="备注">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="txtHref" class="col-sm-2 control-label">链接</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="txtHref"
-										placeholder="链接">
-								</div>
-							</div>
-						</form>
+						</div>
+						<div style="min-height: 200px;" class="funtion-list box">
+							<table
+								class="table table-striped table-bordered table-hover text-center">
+								<thead>
+									<tr>
+										<th style="width:45%">方法名称</th>
+										<th style="width:45%">权限标识</th>
+										<th style="width:10%">删除</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 				<!-- /.modal-content -->
@@ -178,7 +178,7 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
-		
+
 		<%@include file="common/footer.jsp"%>
 	</div>
 </body>

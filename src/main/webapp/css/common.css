@@ -67,6 +67,13 @@
 	color:#000;
 }
 
+#permissionModal table td{
+	padding:10px;
+}
+#permissionModal ul li{
+	float:left;
+	margin-right:15px;
+}
 
 
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.frank.dao.RoleFunctionDao">
+	<resultMap type="com.frank.entity.RoleFunction" id="BaseResultMap">
+		<result column="role_id" property="roleID" jdbcType="INTEGER" />
+		<result column="function_id" property="functionID" jdbcType="INTEGER" />
+		<result column="permission" property="permission" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<delete id="deleteRoleFunctionByFunctionID">
+		delete from role_function
+		where function_id in 
+		<foreach collection="array" item="functionID" index="index" open="(" separator="," close=")">
+			#{functionID}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteRoleFunctionByRoleID">
+		delete from role_function
+		where role_id in 
+		<foreach collection="array" item="roleID" index="index" open="(" separator="," close=")">
+			#{roleID}
+		</foreach>
+	</delete>
+	
+	<select id="queryRoleFunctionByRoleID" resultMap="BaseResultMap">
+		select rf.role_id,rf.function_id,f.permission
+		from role_function rf
+		left join function f on f.function_id=rf.function_id
+		where rf.role_id=#{roleID}
+	</select>
+	
+	
+	<insert id="addRoleFunction"  parameterType="com.frank.entity.RoleFunction">
+		insert into role_function
+		(role_id,function_id)
+		values
+		(#{roleID},#{functionID})
+	</insert>
+	
+	<select id="findPermissionByUserID" resultType="java.lang.String">
+  		select permission
+  		from user_role ur
+  		left join role_function rf on rf.role_id = ur.role_id
+  		left join function f on f.function_id= rf.function_id
+  		where ur.user_id=#{userID}
+  	</select>
+	
+</mapper>

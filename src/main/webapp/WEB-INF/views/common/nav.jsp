@@ -7,9 +7,15 @@
 			</div>
 			<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="user"><a href="<%=basePath%>/user">用戶管理</a></li>
-					<li class="role"><a href="<%=basePath%>/role">角色管理</a></li>
-					<li class="menu"><a href="<%=basePath%>/menu">菜单管理</a></li>
+					<shiro:hasPermission name="user:view">
+						<li class="user"><a href="<%=basePath%>/user">用戶管理</a></li>
+					</shiro:hasPermission>
+					<shiro:hasPermission name="role:view">
+						<li class="role"><a href="<%=basePath%>/role">角色管理</a></li>
+					</shiro:hasPermission>
+					<shiro:hasPermission name="menu:view">
+						<li class="menu"><a href="<%=basePath%>/menu">菜单管理</a></li>
+					</shiro:hasPermission>			
 				</ul>
 			</div>
 			<div class="navbar-custom-menu">

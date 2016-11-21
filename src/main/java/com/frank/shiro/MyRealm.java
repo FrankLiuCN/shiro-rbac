@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.frank.entity.User;
+import com.frank.service.RoleFunctionService;
 import com.frank.service.UserService;
 
 @Service
@@ -28,10 +29,15 @@ public class MyRealm extends AuthorizingRealm {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	RoleFunctionService roleFunctionService;
+	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-		String userName = (String) principalCollection.fromRealm(getName()).iterator().next();
+		User user = (User) principalCollection.fromRealm(getName()).iterator().next();
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		Set<String> permissons=roleFunctionService.findPermissionByUserID(user.getUserID());
+		info.setStringPermissions(permissons);
 		return info;
 	}
 

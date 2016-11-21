@@ -23,6 +23,9 @@
 						<button class="btn btn-primary" onclick="editRole()">
 							<i class="glyphicon glyphicon-edit"></i> 编辑
 						</button>
+						<button class="btn btn-primary" onclick="setPermisson()">
+							<i class="glyphicon glyphicon-edit"></i> 权限设置
+						</button>
 						<button class="btn btn-danger" data-confirm="确认要删除所选的用户吗?">
 							<i class="glyphicon glyphicon-trash"></i> 删除
 						</button>
@@ -46,7 +49,8 @@
 							<tr>
 								<th style="width: 40px;"><input type="checkbox" class="all" /></th>
 								<th style="width: 80px;">编号</th>
-								<th>角色名称</th>
+								<th style="width: 300px;">角色名称</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,7 +64,7 @@
 						</ul>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 		<div class="modal fade" tabindex="-1" role="dialog" id="roleModal">
@@ -76,7 +80,7 @@
 					<div class="modal-body">
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<label for=""txtRoleName"" class="col-sm-3 control-label">角色名称</label>
+								<label for="" txtRoleName"" class="col-sm-3 control-label">角色名称</label>
 								<div class="col-sm-7">
 									<input type="text" class="form-control" id="txtRoleName"
 										placeholder="角色名称">
@@ -94,7 +98,37 @@
 			<!-- /.modal-dialog -->
 		</div>
 		<!-- /.modal -->
+		
+		<div class="modal fade" tabindex="-1" role="dialog" id="permissionModal">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">权限设置</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered">
+							<tbody>
+								
+							</tbody>
+						</table>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="btnPermissionSave()">保存</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- /.modal -->
+		
 		<%@include file="common/footer.jsp"%>
-	</div>	
+	</div>
 </body>
 </html>

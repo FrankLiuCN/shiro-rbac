@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.frank.dao.FunctionDao">
+	<resultMap type="com.frank.entity.Function" id="BaseResultMap">
+		<id column="function_id" property="functionID" jdbcType="INTEGER" />
+		<result column="menu_id" property="menuID" jdbcType="INTEGER" />
+		<result column="function_name" property="functionName" jdbcType="VARCHAR" />
+		<result column="permission" property="permission" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="queryFunctionByMenuID" resultMap="BaseResultMap">
+		select function_id,menu_id,function_name,permission
+		from function
+		where menu_id in 
+		<foreach collection="array" item="menuID" index="index" open="(" separator="," close=")">
+			#{menuID}
+		</foreach>
+	</select>
+	
+	<insert id="addFunction" parameterType="com.frank.entity.Function">
+		insert into 
+		function(menu_id,function_name,permission)
+		values(#{menuID},#{functionName},#{permission})
+	</insert>
+	
+	<delete id="deleteFunction">
+		delete from function
+		where function_id=#{functionID}
+	</delete>
+	
+	<delete id="deleteFunctionByMenuID">
+		delete from function
+		where menu_id in 
+		<foreach collection="array" item="menuID" index="index" open="(" separator="," close=")">
+			#{menuID}
+		</foreach>
+	</delete>
+	
+</mapper>

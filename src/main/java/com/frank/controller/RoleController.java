@@ -2,8 +2,11 @@ package com.frank.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,8 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.frank.dto.DataResult;
 import com.frank.dto.PageModel;
+import com.frank.dto.RoleFunctionModel;
 import com.frank.dto.UserModel;
+import com.frank.entity.MenuPermission;
 import com.frank.entity.Role;
+import com.frank.entity.RoleFunction;
+import com.frank.service.MenuService;
+import com.frank.service.RoleFunctionService;
 import com.frank.service.RoleService;
 
 @Controller
@@ -21,11 +29,19 @@ public class RoleController {
 	@Autowired
 	RoleService roleService;
 
+	@Autowired
+	MenuService menuService;
+	
+	@Autowired
+	RoleFunctionService roleFunctionService;
+
+	@RequiresPermissions("role:view")
 	@RequestMapping(value = "role", method = RequestMethod.GET)
 	public String roleManage() {
 		return "role";
 	}
 
+	@RequiresPermissions("role:view")
 	@RequestMapping(value = "role/list", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<PageModel<Role>> roleList(int pageNum, int pageSize, String fuzzy) {
@@ -53,6 +69,7 @@ public class RoleController {
 		return result;
 	}
 
+	@RequiresPermissions("role:add")
 	@RequestMapping(value = "role/add", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> addRole(String roleName) {
@@ -61,6 +78,7 @@ public class RoleController {
 		return result;
 	}
 
+	@RequiresPermissions("role:edit")
 	@RequestMapping(value = "role/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> editRole(Role role) {
@@ -74,6 +92,7 @@ public class RoleController {
 		return result;
 	}
 
+	@RequiresPermissions("role:delete")
 	@RequestMapping(value = "role/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> deleteRole(@RequestParam(value = "roleIDs[]") int[] roleIDs) {
@@ -84,6 +103,27 @@ public class RoleController {
 		} else {
 			result = new DataResult<String>(0, "执行成功。", re.toString());
 		}
+		return result;
+	}
+
+	@RequiresPermissions("role:setPermission")
+	@RequestMapping(value = "role/permission/{roleID}", method = RequestMethod.GET)
+	@ResponseBody
+	public DataResult<List<MenuPermission>> rolePermission(@PathVariable("roleID") Integer roleID) {
+		List<MenuPermission> menuPermissions = menuService.queryMenuPermission(roleID);
+		DataResult<List<MenuPermission>> result = new DataResult<List<MenuPermission>>();
+		result.setCode(0);
+		result.setMsg("执行成功。");
+		result.setData(menuPermissions);
+		return result;
+	}
+	
+	@RequiresPermissions("role:setPermission")
+	@RequestMapping(value = "role/permission/edit", method = RequestMethod.POST)
+	@ResponseBody
+	public DataResult<String> editRolePermission(@RequestBody RoleFunctionModel model) {		
+		roleFunctionService.editRolePermission(model.getRoleID(), model.getRoleFunctions());
+		DataResult<String> result= new DataResult<String>(0, "执行成功。");
 		return result;
 	}
 

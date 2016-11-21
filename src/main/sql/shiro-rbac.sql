@@ -41,13 +41,14 @@ PRIMARY KEY(`menu_id`)
 
 CREATE TABLE `function`(
 `function_id` int NOT NULL AUTO_INCREMENT COMMENT '方法编号',
+`menu_id` int NOT NULL COMMENT '菜单编号',
 `function_name` varchar(100) NOT NULL COMMENT '',
 `permission` varchar(100) COMMENT '权限标识',
 PRIMARY KEY(`function_id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=UTF8 COMMENT='方法表';
 
 CREATE TABLE `role_function`(
-`user_id` int NOT NULL COMMENT '用户编号',
+`role_id` int NOT NULL COMMENT '角色编号',
 `function_id` int NOT NULL COMMENT '方法编号'
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT='角色方法表';
 

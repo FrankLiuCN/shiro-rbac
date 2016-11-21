@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.javassist.expr.Instanceof;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -26,10 +29,17 @@ public class OverallExceptionResolver implements HandlerExceptionResolver {
 			response.setCharacterEncoding("UTF-8"); // 避免乱码
 			response.setHeader("Cache-Control", "no-cache, must-revalidate");
 			try {
-				response.getWriter().write("{\"code\":-1,\"msg\":\"" + ex.getMessage() + "\"}");
+				String msg = "";
+				if (ex instanceof AuthorizationException) {
+					msg = "{\"code\":-2,\"msg\":\"无权限访问此功能。\"}";
+				} else {
+
+					msg = "{\"code\":-1,\"msg\":\"" + ex.getMessage() + "\"}";
+				}
+				response.getWriter().write(msg);
 			} catch (IOException e) {
 			}
-		}else {
+		} else {
 			mv.setViewName("login");
 		}
 		return mv;

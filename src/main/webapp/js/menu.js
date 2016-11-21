@@ -61,7 +61,7 @@ function addMenu() {
 	emptyModal();
 	getAllRole();
 	$('#menuModal .modal-title').text("添加菜单");
-	$('#menuModal').modal('show')
+	$('#menuModal').modal('show');
 }
 
 // 保存之前检查数据完整性
@@ -87,7 +87,7 @@ function editMenu() {
 		ccNotice('请选择一条记录！');
 		return;
 	}
-	$('#menuModal .modal-title').text("编辑用户");
+	$('#menuModal .modal-title').text("编辑菜单");
 	$('#menuModal').modal('show')
 
 	// 根据用户ID获取用户详细信息
@@ -238,4 +238,92 @@ function initBodyCheck() {
 function search() {
 	_fuzzy = $('#txtFuzzy').val();
 	getMenuList();
+}
+
+function setFunction() {
+	var checkboxes = $('input.check');
+	_menuID = undefined;
+	$.each(checkboxes, function(index, item) {
+		if (true == $(item).is(':checked')) {
+			_menuID = $(item).attr('menuid');
+			return false;
+		}
+	});
+	if (!_menuID) {
+		ccNotice('请选择一条记录！');
+		return;
+	}
+	$('#functionModal .modal-title').text("设置方法");
+	$('#functionModal').modal('show');
+	loadFunctionByMenuID();
+}
+
+function loadFunctionByMenuID() {
+	$('.funtion-list table tbody').html('');
+	$.get(basePath + '/function/' + _menuID + '/list', function(result) {
+		if (result.code == 0) {
+			var data = result.data;
+			$.each(data, function(i, item) {
+				var row = $('<tr/>');
+				$('<td/>').text(item.functionName).appendTo(row);
+				$('<td/>').text(item.permission).appendTo(row);
+				var deleteTD= $('<td/>').appendTo(row);
+				$('<i/>',{
+					class:'glyphicon glyphicon-trash',
+					click:function(){
+						deleteFunction(item.functionID);
+					}
+				}).css({
+				    cursor: 'pointer'
+				}).appendTo(deleteTD);
+				row.appendTo($('.funtion-list table tbody'));
+			});
+		} else {
+			ccNotice(result.msg);
+		}
+	});
+}
+
+function deleteFunction(functionID){
+	$.post(basePath + '/function/delete', {
+		functionID:functionID
+	}).done(function(result){ 
+		if (result.code == 0) {
+			loadFunctionByMenuID();
+		} else {
+			ccNotice(result.msg);
+		}
+	}).fail(function(xhr, status, error) {
+    	ccNotice(xhr.responseText);
+    });
+}
+
+// 添加方法
+function saveFunction() {
+	var functionName = $('#txtFunctionName').val().trim();
+	var permission = $('#txtPemission').val().trim();
+	if (functionName === '') {
+		ccNotice('方法名称不能为空!');
+		return;
+	}
+	if (permission === '') {
+		ccNotice('权限标识不能为空!');
+		return;
+	}
+
+	var func = {
+		menuID : _menuID,
+		functionName : functionName,
+		permission : permission
+	};
+
+	$.post(basePath + '/function/add', func, function(result) {
+		if (result.code == 0) {
+			$('#txtFunctionName').val('');
+			$('#txtPemission').val('');
+			loadFunctionByMenuID();
+		} else {
+			ccNotice(result.msg);
+		}
+	});
 }

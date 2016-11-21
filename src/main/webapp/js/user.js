@@ -78,7 +78,7 @@ function checkData(isEdit) {
 		return '密码不能为空!';
 	}
 	var roleList = _sltRole.val();
-	if (roleList.length < 1) {
+	if (!roleList||roleList.length < 1) {
 		return '请选择角色!';
 	}
 

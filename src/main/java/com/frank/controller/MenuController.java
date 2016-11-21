@@ -1,5 +1,6 @@
 package com.frank.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +24,13 @@ public class MenuController {
 	@Autowired
 	MenuService menuService;
 
+	@RequiresPermissions("menu:view")
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public String menu() {
 		return "menu";
 	}
 
+	@RequiresPermissions("menu:view")
 	@RequestMapping(value = "/menu/list")
 	@ResponseBody
 	public DataResult<PageModel<MenuModel>> menuList(int pageNum, int pageSize, String fuzzy) {
@@ -42,20 +45,22 @@ public class MenuController {
 		}
 		return result;
 	}
-	
+
+	@RequiresPermissions("menu:edit")
 	@RequestMapping(value = "/menu/{menuID}/detail", method = RequestMethod.POST)
 	@ResponseBody
-	public DataResult<Menu> queryMenuByMenuID(@PathVariable("menuID")Integer menuID){		
-		Menu menu= menuService.queryMenuByMenuID(menuID);
+	public DataResult<Menu> queryMenuByMenuID(@PathVariable("menuID") Integer menuID) {
+		Menu menu = menuService.queryMenuByMenuID(menuID);
 		DataResult<Menu> result;
-		if (null!=menu) {
-			result = new DataResult<Menu>(0, "执行成功",menu);
-		}else {
-			 result = new DataResult<Menu>(-1, "找不到此菜单信息。");
+		if (null != menu) {
+			result = new DataResult<Menu>(0, "执行成功", menu);
+		} else {
+			result = new DataResult<Menu>(-1, "找不到此菜单信息。");
 		}
 		return result;
 	}
-	
+
+	@RequiresPermissions("menu:add")
 	@RequestMapping(value = "/menu/add", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> addMenu(Menu menu) {
@@ -63,7 +68,8 @@ public class MenuController {
 		DataResult<String> result = new DataResult<String>(0, "执行成功");
 		return result;
 	}
-	
+
+	@RequiresPermissions("menu:edit")
 	@RequestMapping(value = "/menu/edit", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> editMenu(Menu menu) {
@@ -71,17 +77,13 @@ public class MenuController {
 		DataResult<String> result = new DataResult<String>(0, "执行成功");
 		return result;
 	}
-	
+
+	@RequiresPermissions("menu:delete")
 	@RequestMapping(value = "menu/delete", method = RequestMethod.POST)
 	@ResponseBody
 	public DataResult<String> deleteMenu(@RequestParam(value = "menuIDs[]") Integer[] menuIDs) {
-		Integer re = menuService.deleteMenu(menuIDs);
-		DataResult<String> result;
-		if (re <= 0) {
-			result = new DataResult<String>(-1, "删除失败。");
-		} else {
-			result = new DataResult<String>(0, "执行成功。");
-		}
+		menuService.deleteMenu(menuIDs);
+		DataResult<String> result = new DataResult<String>(0, "执行成功。");
 		return result;
 	}
 }

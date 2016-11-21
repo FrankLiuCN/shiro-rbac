@@ -19,21 +19,28 @@
 			<div class="container">
 				<div class="page-top">
 					<div class="tool">
-						<button class="btn btn-primary" onclick="addUser()">
-							<i class="glyphicon glyphicon-plus"></i> 添加
-						</button>
-						<button class="btn btn-primary" onclick="editUser()">
-							<i class="glyphicon glyphicon-edit"></i> 编辑
-						</button>
-						<button class="btn btn-danger" data-confirm="确认要删除所选的用户吗?">
-							<i class="glyphicon glyphicon-trash"></i> 删除
-						</button>
+						<shiro:hasPermission name="user:add">
+							<button class="btn btn-primary" onclick="addUser()">
+								<i class="glyphicon glyphicon-plus"></i> 添加
+							</button>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="user:edit">
+							<button class="btn btn-primary" onclick="editUser()">
+								<i class="glyphicon glyphicon-edit"></i> 编辑
+							</button>
+						</shiro:hasPermission>
+						<shiro:hasPermission name="user:delete">
+							<button class="btn btn-danger" data-confirm="确认要删除所选的用户吗?">
+								<i class="glyphicon glyphicon-trash"></i> 删除
+							</button>
+						</shiro:hasPermission>
 					</div>
 					<div class="search">
 						<div class="input-group">
-							<input class="form-control" type="text" id="txtFuzzy" placeholder="用户名/登录名">
-							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button" onclick="search();">
+							<input class="form-control" type="text" id="txtFuzzy"
+								placeholder="用户名/登录名"> <span class="input-group-btn">
+								<button class="btn btn-primary" type="button"
+									onclick="search();">
 									<i class="glyphicon glyphicon-search"></i> 查询
 								</button>
 							</span>
@@ -41,10 +48,11 @@
 					</div>
 				</div>
 				<div class="page-list box">
-					<table class="table table-striped table-bordered table-hover text-center">
+					<table
+						class="table table-striped table-bordered table-hover text-center">
 						<thead>
 							<tr>
-								<th style="width: 40px;"><input type="checkbox" class="all"/></th>
+								<th style="width: 40px;"><input type="checkbox" class="all" /></th>
 								<th>用户名</th>
 								<th>登录名</th>
 								<th style="width: 100px;">状态</th>
@@ -58,12 +66,10 @@
 					</table>
 				</div>
 				<div class="row">
-					<div class="col-sm-4 list-info">
-						
-					</div>
+					<div class="col-sm-4 list-info"></div>
 					<div class="col-sm-8">
-					 <ul class="pagination">
-					  </ul>
+						<ul class="pagination">
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -81,7 +87,7 @@
 					<div class="modal-body">
 						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<label for=""txtNickName"" class="col-sm-2 control-label">用户名</label>
+								<label for="" txtNickName"" class="col-sm-2 control-label">用户名</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" id="txtNickName"
 										placeholder="用户">
@@ -109,10 +115,12 @@
 							<div class="form-group">
 								<label for="inputPassword3" class="col-sm-2 control-label">角色</label>
 								<div class="col-sm-10">
-				                <select class="form-control select2" id="sltRole" multiple="multiple" data-placeholder="选择一个角色" style="width: 100%;">
+									<select class="form-control select2" id="sltRole"
+										multiple="multiple" data-placeholder="选择一个角色"
+										style="width: 100%;">
 
-				                </select>
-				                </div>
+									</select>
+								</div>
 							</div>
 						</form>
 					</div>
